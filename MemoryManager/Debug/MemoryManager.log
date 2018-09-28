@@ -1,0 +1,5 @@
+﻿  main.c
+  mmemory.c
+d:\workspace\os\memorymanager\memorymanager\mmemory.c(40): warning C6011: Разыменование пустого указателя "block". 
+d:\workspace\os\memorymanager\memorymanager\mmemory.c(56): warning C6011: Разыменование пустого указателя "node". 
+d:\workspace\os\memorymanager\memorymanager\mmemory.c(99): warning C6274: В качестве параметра _Param_(2) передан не символ, хотя при вызове "printf" требуется символ; фактический тип: "char **".
