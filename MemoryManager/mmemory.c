@@ -117,6 +117,30 @@ int _write(VA ptr, void* pBuffer, size_t szBuffer) {
 		}
 		curr = curr->next;
 	}
+	return UNKNOWN_ERROR;
+}
+
+int _read(VA ptr, void* pBuffer, size_t szBuffer) {
+	if (list == NULL) {
+		return UNKNOWN_ERROR;
+	}
+	if (ptr == NULL || pBuffer == NULL || szBuffer < 0) {
+		return INVALID_PARAMETERS;
+	}
+	Node* curr = list->head;
+	while (curr != NULL) {
+		if (curr->block->va == ptr) {
+			if (curr->block->size <= szBuffer) {
+				memcpy(pBuffer, ptr, szBuffer);
+				return SUCCESSFUL_IMPLEMENTATION;
+			}
+			else {
+				return LACK_OF_MEMORY;
+			}
+		}
+		curr = curr->next;
+	}
+	return UNKNOWN_ERROR;
 }
 
 Node* init_node(size_t size) {
