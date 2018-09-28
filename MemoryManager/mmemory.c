@@ -106,12 +106,14 @@ int _write(VA ptr, void* pBuffer, size_t szBuffer) {
 	}
 	Node* curr = list->head;
 	while (curr != NULL) {
-		if (curr->block->va == ptr && curr->block->size >= szBuffer) {
-			memcpy(ptr, pBuffer, szBuffer);
-			return SUCCESSFUL_IMPLEMENTATION;
-		}
-		else {
-			return LACK_OF_MEMORY;
+		if (curr->block->va == ptr) {
+			if (curr->block->size >= szBuffer) {
+				memcpy(ptr, pBuffer, szBuffer);
+				return SUCCESSFUL_IMPLEMENTATION;
+			}
+			else {
+				return LACK_OF_MEMORY;
+			}
 		}
 		curr = curr->next;
 	}

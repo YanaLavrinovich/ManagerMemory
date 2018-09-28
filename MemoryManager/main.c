@@ -88,6 +88,37 @@ void free_one_block_success() {
 	assert(0 == err);
 }
 
+void write_invalid_parameters() {
+	int err;
+	VA va1;
+	_init(1, 10);
+	_malloc(&va1, 10);
+	err = _write(NULL, NULL, 10);
+	assert(-1 == err);
+}
+
+void write_lack_of_memory() {
+	int err;
+	VA va1;
+	char* write_buffer = "write";
+	_init(1, 10);
+	_malloc(&va1, 5);
+	err = _write(va1, write_buffer, 6);
+	assert(-2 == err);
+}
+
+void write_successful_implementation() {
+	int err;
+	VA va1;
+	char* write_buffer = "write";
+	_init(1, 10);
+	_malloc(&va1, 5);
+	err = _write(va1, write_buffer, 5);
+	assert(0 == err);
+}
+
+
+
 void init_test() {
 	init_invalid_parameters();
 	init_successful_implementation();
@@ -108,11 +139,18 @@ void free_test() {
 	free_one_block_success();
 }
 
+void write_test() {
+	write_invalid_parameters();
+	write_lack_of_memory();
+	write_successful_implementation();
+}
+
 int main(void)                
 {
 	init_test();
 	malloc_test();
 	free_test();
+	write_test();
 	//_free(va2);
 	//char* buf = 'ddd';
 	//_write(&va1, buf, 3);
