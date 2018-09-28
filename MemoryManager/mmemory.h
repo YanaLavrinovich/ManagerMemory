@@ -124,5 +124,6 @@ int _init(int n, int szPage);
 Node* init_node(size_t size);
 Memory_block* create_memory_block(VA va, size_t size);
 Node* create_node(Memory_block *new_memory_block);
+Node *get_node(List *list, VA va);
 
 #endif

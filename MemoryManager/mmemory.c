@@ -63,7 +63,7 @@ int _free(VA ptr) {
 	if (list == NULL) {
 		return UNKNOWN_ERROR;
 	}
-	if (ptr == NULL) {
+	if (ptr == NULL || get_node(list, ptr) == NULL) {
 		return INVALID_PARAMETERS;
 	}
 	Node* current_node = list->head;
@@ -81,7 +81,7 @@ int _free(VA ptr) {
 			}
 			free(current_node);
 			
-			//free(ptr);
+			free(ptr);
 			return SUCCESSFUL_IMPLEMENTATION;
 		}
 		current_node = current_node->next;
@@ -134,4 +134,15 @@ Node* create_node(Memory_block *new_memory_block) {
 	Node* new_node = (Node*)malloc(sizeof(Node));
 	new_node->block = new_memory_block;
 	return new_node;
+}
+
+Node *get_node(List *list, VA va) {
+	Node *current_node = list->head;
+	while (current_node != NULL) {
+		if (current_node->block->va == va) {
+			return current_node;
+		}
+		current_node = current_node->next;
+	}
+	return NULL;
 }
