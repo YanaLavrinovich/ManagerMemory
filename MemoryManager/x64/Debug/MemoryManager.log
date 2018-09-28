@@ -1,0 +1,4 @@
+﻿  main.c
+d:\workspace\os\managermemory\memorymanager\main.c(15): warning C4013: print_list: нет определения; предполагается "extern" с возвратом типа "int"
+d:\workspace\os\managermemory\memorymanager\main.c(18): warning C4013: system: нет определения; предполагается "extern" с возвратом типа "int"
+  MemoryManager.vcxproj -> D:\Workspace\OS\ManagerMemory\x64\Debug\MemoryManager.exe

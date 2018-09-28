@@ -121,4 +121,8 @@ int _write(VA ptr, void* pBuffer, size_t szBuffer);
  **/
 int _init(int n, int szPage);
 
+Node* init_node(size_t size);
+Memory_block* create_memory_block(VA va, size_t size);
+Node* create_node(Memory_block *new_memory_block);
+
 #endif

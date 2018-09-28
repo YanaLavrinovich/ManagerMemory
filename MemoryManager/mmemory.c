@@ -36,29 +36,25 @@ int _malloc(VA* ptr, size_t szBlock) {
 	if (list->size_free_memory < szBlock) {
 		return LACK_OF_MEMORY;
 	}
-	Memory_block* block = (Memory_block*)malloc(sizeof(Memory_block));
-	block->size = szBlock;
-	block->va = ptr;
-
 	if (list->head == NULL) {
-		Node* node = (Node*)malloc(sizeof(Node));
-		list->head = node;
-		list->end = node;
+		Node* new_node = init_node(szBlock);
+		list->head = new_node;
+		list->end = new_node;
 		list->size_free_memory -= szBlock;
-		node->next = NULL;
-		node->previous = NULL;
-		node->block = block;
+		new_node->next = NULL;
+		new_node->previous = NULL;
+		*ptr = new_node->block->va;
 		
 		return SUCCESSFUL_IMPLEMENTATION;
 	}
 	else {
-		Node* node = (Node*)malloc(sizeof(Node));
-		node->block = block;
-		node->next = NULL;
-		node->previous = list->end;
-		list->end->next = node;
-		list->end = node;
+		Node* new_node = init_node(szBlock);
+		new_node->next = NULL;
+		new_node->previous = list->end;
+		list->end->next = new_node;
+		list->end = new_node;
 		list->size_free_memory -= szBlock;
+		*ptr = new_node->block->va;
 		return SUCCESSFUL_IMPLEMENTATION;
 	}
 }
@@ -96,7 +92,7 @@ int _free(VA ptr) {
 void print_list() {
 	Node* curr = list->head;
 	while (curr != NULL) {
-		printf("%c - %d ", curr->block->va, curr->block->size);
+		printf("%c - %d ", &(curr->block->va), curr->block->size);
 		curr = curr->next;
 	}
 }
@@ -119,5 +115,23 @@ int _write(VA ptr, void* pBuffer, size_t szBuffer) {
 		}
 		curr = curr->next;
 	}
+}
 
+Node* init_node(size_t size) {
+	VA va = (VA)malloc(size * sizeof(VA));
+	Node* new_node = create_node(create_memory_block(va, size));
+	return new_node;
+}
+
+Memory_block* create_memory_block(VA va, size_t size) {
+	Memory_block* new_memory_block = (Memory_block*)malloc(sizeof(Memory_block));
+	new_memory_block->va = va;
+	new_memory_block->size = size;
+	return new_memory_block;
+}
+
+Node* create_node(Memory_block *new_memory_block) {
+	Node* new_node = (Node*)malloc(sizeof(Node));
+	new_node->block = new_memory_block;
+	return new_node;
 }
